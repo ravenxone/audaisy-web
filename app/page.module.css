@@ -1,0 +1,50 @@
+.page {
+  --ground-top: clamp(41rem, 74vh, 49rem);
+  position: relative;
+  overflow: clip;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #ffffff 0%, #fffef9 62%, #fff7c8 100%);
+}
+
+.page::before {
+  content: "";
+  position: absolute;
+  inset: var(--ground-top) 0 0;
+  background:
+    linear-gradient(180deg, rgba(255, 204, 0, 0.95) 0%, #ffcc00 35%, #f9bc00 100%);
+  z-index: 0;
+}
+
+.page::after {
+  content: "";
+  position: absolute;
+  left: -2%;
+  right: -2%;
+  top: calc(var(--ground-top) - 3.5rem);
+  height: 7rem;
+  z-index: 0;
+  background:
+    radial-gradient(circle at 3rem 5rem, #ffffff 0 2.7rem, transparent 2.8rem)
+      0 0 / 9rem 100% repeat-x,
+    radial-gradient(circle at 7rem 3rem, #ffffff 0 1.5rem, transparent 1.6rem)
+      0 0 / 10rem 100% repeat-x,
+    radial-gradient(circle at 5rem 5.3rem, #ffffff 0 1.2rem, transparent 1.3rem)
+      0 0 / 8.5rem 100% repeat-x;
+}
+
+.frame {
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 900px) {
+  .page {
+    --ground-top: 52rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .page {
+    --ground-top: 56rem;
+  }
+}
