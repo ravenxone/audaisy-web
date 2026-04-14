@@ -20,29 +20,23 @@ describe("FlowerConversation", () => {
     });
   });
 
-  it("rotates through flower exchanges over time", () => {
+  it("cycles the minimal caption between flowers over time", () => {
     render(<FlowerConversation exchanges={flowerExchanges} />);
 
-    expect(screen.getByTestId("speaker-bubble")).toHaveTextContent(
-      /I have a story\s*to tell\./
-    );
-    expect(screen.getByTestId("listener-bubble")).toHaveTextContent(
+    expect(screen.getByTestId("flower-caption")).toHaveTextContent(
       /I'm all ears,\s*start at page one\./
     );
 
     act(() => {
-      vi.advanceTimersByTime(flowerExchanges[0].durationMs + 50);
+      vi.advanceTimersByTime(Math.round(flowerExchanges[0].durationMs / 2) + 50);
     });
 
-    expect(screen.getByTestId("speaker-bubble")).toHaveTextContent(
+    expect(screen.getByTestId("flower-caption")).toHaveTextContent(
       /Can you hear every\s*chapter and pause\?/
-    );
-    expect(screen.getByTestId("listener-bubble")).toHaveTextContent(
-      /Every chapter,\s*every breath\./
     );
   });
 
-  it("stays on the first exchange when reduced motion is preferred", () => {
+  it("stays on the initial caption when reduced motion is preferred", () => {
     const matchMedia = vi.fn().mockImplementation(() => ({
       matches: true,
       media: "(prefers-reduced-motion: reduce)",
@@ -65,10 +59,7 @@ describe("FlowerConversation", () => {
       vi.advanceTimersByTime(20_000);
     });
 
-    expect(screen.getByTestId("speaker-bubble")).toHaveTextContent(
-      /I have a story\s*to tell\./
-    );
-    expect(screen.getByTestId("listener-bubble")).toHaveTextContent(
+    expect(screen.getByTestId("flower-caption")).toHaveTextContent(
       /I'm all ears,\s*start at page one\./
     );
   });

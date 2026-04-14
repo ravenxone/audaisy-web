@@ -1,6 +1,7 @@
 .stage {
   position: relative;
   aspect-ratio: 904 / 610;
+  overflow: visible;
 }
 
 .plant {
@@ -19,91 +20,65 @@
   object-fit: contain;
 }
 
-.marker {
-  position: absolute;
-  width: clamp(1.8rem, 3vw, 2.5rem);
-  height: clamp(1.8rem, 3vw, 2.5rem);
-  border-radius: 999px;
-  transform: translate(-50%, -50%);
-  border: 2px dashed rgba(17, 17, 17, 0.28);
-  background: rgba(255, 204, 0, 0.2);
-  animation: pulse 2.2s ease-in-out infinite;
-}
-
-.listener {
-  background: rgba(255, 255, 255, 0.65);
-  animation-delay: 0.25s;
-}
-
-.bubble {
+.caption {
   position: absolute;
   z-index: 2;
-  max-width: clamp(8rem, 22vw, 12rem);
-  padding: 0.8rem 0.95rem;
-  border: 2px solid rgba(17, 17, 17, 0.95);
-  background: rgba(255, 255, 255, 0.94);
-  box-shadow: 0 18px 36px -28px rgba(17, 17, 17, 0.45);
-  font-size: clamp(0.76rem, 1vw + 0.25rem, 0.98rem);
-  line-height: 1.2;
-  animation: bubbleIn 360ms ease both;
+  max-width: clamp(7rem, 18vw, 11rem);
+  font-size: clamp(0.92rem, 0.5vw + 0.78rem, 1.15rem);
+  line-height: 1.18;
+  animation: captionIn 280ms ease both;
 }
 
-.bubble span {
+.caption span {
   display: block;
 }
 
 .alignLeft {
   transform: translate3d(0, 0, 0);
-  border-radius: 1.35rem 1.35rem 1.35rem 0.5rem;
 }
 
 .alignCenter {
   transform: translate3d(-50%, 0, 0);
-  border-radius: 1.35rem;
 }
 
 .alignRight {
   transform: translate3d(-100%, 0, 0);
-  border-radius: 1.35rem 1.35rem 0.5rem 1.35rem;
 }
 
-.alignLeft::after,
-.alignCenter::after,
-.alignRight::after {
+.tailLeft::after,
+.tailCenter::after,
+.tailRight::after {
   content: "";
   position: absolute;
-  bottom: -0.95rem;
-  width: 1rem;
-  height: 1rem;
-  border-bottom: 2px solid rgba(17, 17, 17, 0.95);
+  top: calc(100% + 0.35rem);
+  width: 1.45rem;
+  height: 1.75rem;
+  border-top: 2px solid rgba(17, 17, 17, 0.95);
 }
 
-.alignLeft::after {
-  left: 1rem;
+.tailLeft::after {
+  left: 1.25rem;
   border-left: 2px solid rgba(17, 17, 17, 0.95);
-  border-bottom-left-radius: 0.4rem;
+  border-top-left-radius: 2rem;
+  transform: rotate(-12deg);
 }
 
-.alignCenter::after {
-  left: calc(50% - 0.5rem);
+.tailCenter::after {
+  left: calc(50% - 0.72rem);
+  border-left: 2px solid rgba(17, 17, 17, 0.95);
+  border-top-left-radius: 1.8rem;
   transform: rotate(12deg);
-  border-left: 2px solid rgba(17, 17, 17, 0.95);
-  border-bottom-left-radius: 0.4rem;
 }
 
-.alignRight::after {
+.tailRight::after {
   right: 1rem;
   border-right: 2px solid rgba(17, 17, 17, 0.95);
-  border-bottom-right-radius: 0.4rem;
-}
-
-.echo {
-  animation-delay: 180ms;
+  border-top-right-radius: 2rem;
+  transform: rotate(10deg);
 }
 
 .stage[data-reduced-motion="true"] .plant,
-.stage[data-reduced-motion="true"] .marker,
-.stage[data-reduced-motion="true"] .bubble {
+.stage[data-reduced-motion="true"] .caption {
   animation: none;
 }
 
@@ -117,33 +92,27 @@
   }
 }
 
-@keyframes pulse {
-  0%,
-  100% {
-    opacity: 0.45;
-    transform: translate(-50%, -50%) scale(0.92);
-  }
-  50% {
-    opacity: 0.8;
-    transform: translate(-50%, -50%) scale(1.06);
-  }
-}
-
-@keyframes bubbleIn {
+@keyframes captionIn {
   from {
     opacity: 0;
-    transform: translate3d(var(--bubble-x, 0), 0.55rem, 0);
+    transform: translate3d(var(--caption-x, 0), 0.3rem, 0);
   }
   to {
     opacity: 1;
-    transform: translate3d(var(--bubble-x, 0), 0, 0);
+    transform: translate3d(var(--caption-x, 0), 0, 0);
   }
 }
 
 @media (max-width: 720px) {
-  .bubble {
-    max-width: 9.5rem;
-    padding: 0.65rem 0.8rem;
-    font-size: 0.74rem;
+  .caption {
+    max-width: 8rem;
+    font-size: 0.8rem;
+  }
+
+  .tailLeft::after,
+  .tailCenter::after,
+  .tailRight::after {
+    width: 1.1rem;
+    height: 1.35rem;
   }
 }

@@ -1,12 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { CSSProperties } from "react";
 
 import {
   flowerPositions,
-  type BubblePosition,
+  type CaptionPosition,
   type FlowerExchange,
   type FlowerId,
 } from "@/data/site";
@@ -17,7 +17,14 @@ type FlowerConversationProps = {
   exchanges: readonly FlowerExchange[];
 };
 
-function bubbleClass(align: BubblePosition["align"]) {
+type FlowerCue = {
+  id: string;
+  flower: FlowerId;
+  lines: readonly [string, string];
+  durationMs: number;
+};
+
+function alignmentClass(align: CaptionPosition["align"]) {
   if (align === "left") {
     return styles.alignLeft;
   }
@@ -29,7 +36,19 @@ function bubbleClass(align: BubblePosition["align"]) {
   return styles.alignCenter;
 }
 
-function bubbleTransformX(align: BubblePosition["align"]) {
+function tailClass(tail: CaptionPosition["tail"]) {
+  if (tail === "left") {
+    return styles.tailLeft;
+  }
+
+  if (tail === "right") {
+    return styles.tailRight;
+  }
+
+  return styles.tailCenter;
+}
+
+function captionOffset(align: CaptionPosition["align"]) {
   if (align === "center") {
     return "-50%";
   }
@@ -41,55 +60,31 @@ function bubbleTransformX(align: BubblePosition["align"]) {
   return "0%";
 }
 
-function Bubble({
+function Caption({
   position,
   lines,
-  testId,
-  echo = false,
 }: {
-  position: BubblePosition;
+  position: CaptionPosition;
   lines: readonly [string, string];
-  testId: string;
-  echo?: boolean;
 }) {
   return (
     <p
-      className={`${styles.bubble} ${bubbleClass(position.align)} ${
-        echo ? styles.echo : ""
-      }`}
+      className={`${styles.caption} ${alignmentClass(position.align)} ${tailClass(
+        position.tail
+      )}`}
       style={
         {
           left: `${position.x}%`,
           top: `${position.y}%`,
-          "--bubble-x": bubbleTransformX(position.align),
+          width: position.width ? `${position.width}%` : undefined,
+          "--caption-x": captionOffset(position.align),
         } as CSSProperties
       }
-      data-testid={testId}
+      data-testid="flower-caption"
     >
       <span>{lines[0]}</span>
       <span>{lines[1]}</span>
     </p>
-  );
-}
-
-function Marker({
-  flowerId,
-  listener = false,
-}: {
-  flowerId: FlowerId;
-  listener?: boolean;
-}) {
-  const flower = flowerPositions[flowerId];
-
-  return (
-    <div
-      className={`${styles.marker} ${listener ? styles.listener : ""}`}
-      style={{
-        left: `${flower.headX}%`,
-        top: `${flower.headY}%`,
-      }}
-      aria-hidden="true"
-    />
   );
 }
 
@@ -122,22 +117,40 @@ function useReducedMotion() {
 
 export function FlowerConversation({ exchanges }: FlowerConversationProps) {
   const reducedMotion = useReducedMotion();
-  const [activeIndex, setActiveIndex] = useState(0);
-  const visibleIndex = reducedMotion ? 0 : activeIndex;
+  const cues = useMemo<FlowerCue[]>(
+    () =>
+      exchanges.flatMap((exchange) => [
+        {
+          id: `${exchange.id}-speaker`,
+          flower: exchange.speaker,
+          lines: exchange.line,
+          durationMs: Math.round(exchange.durationMs / 2),
+        },
+        {
+          id: `${exchange.id}-listener`,
+          flower: exchange.listener,
+          lines: exchange.echo,
+          durationMs: Math.round(exchange.durationMs / 2),
+        },
+      ]),
+    [exchanges]
+  );
+  const initialCueIndex = cues.length > 1 ? 1 : 0;
+  const [activeCueIndex, setActiveCueIndex] = useState(initialCueIndex);
+  const visibleCueIndex = reducedMotion ? initialCueIndex : activeCueIndex;
+  const currentCue = cues[visibleCueIndex] ?? cues[0];
 
   useEffect(() => {
-    if (reducedMotion || exchanges.length < 2) {
+    if (reducedMotion || cues.length < 2) {
       return;
     }
 
     const timer = window.setTimeout(() => {
-      setActiveIndex((currentIndex) => (currentIndex + 1) % exchanges.length);
-    }, exchanges[visibleIndex].durationMs);
+      setActiveCueIndex((currentIndex) => (currentIndex + 1) % cues.length);
+    }, currentCue.durationMs);
 
     return () => window.clearTimeout(timer);
-  }, [exchanges, reducedMotion, visibleIndex]);
-
-  const currentExchange = exchanges[visibleIndex];
+  }, [currentCue.durationMs, cues.length, reducedMotion]);
 
   return (
     <div
@@ -156,20 +169,10 @@ export function FlowerConversation({ exchanges }: FlowerConversationProps) {
         />
       </div>
 
-      <Marker flowerId={currentExchange.speaker} />
-      <Marker flowerId={currentExchange.listener} listener />
-
       <div role="status" aria-live={reducedMotion ? "off" : "polite"}>
-        <Bubble
-          position={flowerPositions[currentExchange.speaker].bubble}
-          lines={currentExchange.line}
-          testId="speaker-bubble"
-        />
-        <Bubble
-          position={flowerPositions[currentExchange.listener].bubble}
-          lines={currentExchange.echo}
-          testId="listener-bubble"
-          echo
+        <Caption
+          position={flowerPositions[currentCue.flower].caption}
+          lines={currentCue.lines}
         />
       </div>
     </div>

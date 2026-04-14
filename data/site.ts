@@ -11,10 +11,12 @@ export type FlowerId =
   | "midLeft"
   | "midRight";
 
-export type BubblePosition = {
+export type CaptionPosition = {
   x: number;
   y: number;
   align: "left" | "center" | "right";
+  tail: "left" | "center" | "right";
+  width?: number;
 };
 
 export type FlowerExchange = {
@@ -55,34 +57,21 @@ export const heroCtas = {
   secondary: SiteLink;
 };
 
-export const flowerPositions: Record<
-  FlowerId,
-  { headX: number; headY: number; bubble: BubblePosition }
-> = {
+export const flowerPositions: Record<FlowerId, { caption: CaptionPosition }> = {
   topLeft: {
-    headX: 34,
-    headY: 16,
-    bubble: { x: 18, y: 1, align: "left" },
+    caption: { x: 50, y: 6, align: "center", tail: "left", width: 18 },
   },
   topCenter: {
-    headX: 54,
-    headY: 29,
-    bubble: { x: 54, y: 11, align: "center" },
+    caption: { x: 58, y: 4, align: "center", tail: "center", width: 18 },
   },
   topRight: {
-    headX: 79,
-    headY: 15,
-    bubble: { x: 90, y: 2, align: "right" },
+    caption: { x: 84, y: 8, align: "right", tail: "right", width: 16 },
   },
   midLeft: {
-    headX: 30,
-    headY: 41,
-    bubble: { x: 11, y: 29, align: "left" },
+    caption: { x: 16, y: 24, align: "left", tail: "left", width: 18 },
   },
   midRight: {
-    headX: 79,
-    headY: 38,
-    bubble: { x: 92, y: 26, align: "right" },
+    caption: { x: 86, y: 23, align: "right", tail: "right", width: 17 },
   },
 };
 
@@ -90,7 +79,7 @@ export const flowerExchanges = [
   {
     id: "story",
     speaker: "topLeft",
-    listener: "topRight",
+    listener: "topCenter",
     line: ["I have a story", "to tell."],
     echo: ["I'm all ears,", "start at page one."],
     durationMs: 3200,
@@ -98,7 +87,7 @@ export const flowerExchanges = [
   {
     id: "chapter",
     speaker: "midLeft",
-    listener: "topCenter",
+    listener: "topRight",
     line: ["Can you hear every", "chapter and pause?"],
     echo: ["Every chapter,", "every breath."],
     durationMs: 3200,
@@ -122,14 +111,17 @@ export const storyParagraphs = [
 export const storyHighlights = [
   {
     title: "Local-first voice",
-    description: "The architecture is designed around a local runtime instead of shipping drafts away by default.",
+    description:
+      "The architecture is designed around a local runtime instead of shipping drafts away by default.",
   },
   {
     title: "Mac-first workflow",
-    description: "Audaisy starts on Apple Silicon laptops where writing, revision, and playback can live side by side.",
+    description:
+      "Audaisy starts on Apple Silicon laptops where writing, revision, and playback can live side by side.",
   },
   {
     title: "Writing with an audience",
-    description: "The goal is simple: give each piece of writing a voice and help every voice find someone ready to listen.",
+    description:
+      "The goal is simple: give each piece of writing a voice and help every voice find someone ready to listen.",
   },
 ] as const;
