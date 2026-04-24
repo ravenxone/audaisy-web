@@ -20,7 +20,7 @@
 .title {
   margin: clamp(2.75rem, 6vw, 4.75rem) 0 0;
   max-width: var(--hero-content-width);
-  font-size: clamp(2.85rem, 4.4vw, 4.7rem);
+  font-size: clamp(2.55rem, 4vw, 4.15rem);
   font-weight: 400;
   line-height: 1.04;
   letter-spacing: -0.02em;
@@ -160,7 +160,7 @@
 
   .title {
     margin-top: 1.85rem;
-    font-size: clamp(2.35rem, 9vw, 3.15rem);
+    font-size: clamp(2.1rem, 8vw, 2.8rem);
     max-width: 11ch;
     line-height: 1.08;
   }
@@ -185,7 +185,7 @@
 
 @media (max-width: 420px) {
   .title {
-    font-size: clamp(2.1rem, 10vw, 2.55rem);
+    font-size: clamp(1.9rem, 8.6vw, 2.3rem);
     max-width: 10ch;
   }
 
