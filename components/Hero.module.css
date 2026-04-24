@@ -155,17 +155,21 @@
   .section {
     --hero-content-width: 100%;
     --hero-video-width: 100%;
-    padding: 1rem 1rem 3rem;
+    padding: 0.5rem 1rem 3rem;
   }
 
   .title {
+    margin-top: 1.85rem;
     font-size: clamp(2.35rem, 9vw, 3.15rem);
     max-width: 11ch;
+    line-height: 1.08;
   }
 
   .subtext {
+    margin-top: 1rem;
     max-width: 29rem;
     font-size: 0.98rem;
+    line-height: 1.55;
   }
 
   .videoFrame {
@@ -176,5 +180,28 @@
   .tagline {
     max-width: 15rem;
     font-size: clamp(1.35rem, 7.4vw, 1.85rem);
+  }
+}
+
+@media (max-width: 420px) {
+  .title {
+    font-size: clamp(2.1rem, 10vw, 2.55rem);
+    max-width: 10ch;
+  }
+
+  .subtext {
+    max-width: 20rem;
+    font-size: 0.94rem;
+  }
+
+  .primaryButton {
+    min-width: 8.9rem;
+    height: 2.45rem;
+    font-size: 0.92rem;
+  }
+
+  .tagline {
+    max-width: 13rem;
+    font-size: clamp(1.2rem, 6.8vw, 1.55rem);
   }
 }
