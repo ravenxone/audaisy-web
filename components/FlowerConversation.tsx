@@ -20,7 +20,7 @@ type FlowerConversationProps = {
 type FlowerCue = {
   id: string;
   flower: FlowerId;
-  lines: readonly [string, string];
+  text: string;
   durationMs: number;
 };
 
@@ -62,10 +62,10 @@ function captionOffset(align: CaptionPosition["align"]) {
 
 function Caption({
   position,
-  lines,
+  text,
 }: {
   position: CaptionPosition;
-  lines: readonly [string, string];
+  text: string;
 }) {
   return (
     <p
@@ -82,8 +82,7 @@ function Caption({
       }
       data-testid="flower-caption"
     >
-      <span>{lines[0]}</span>
-      <span>{lines[1]}</span>
+      {text}
     </p>
   );
 }
@@ -123,14 +122,14 @@ export function FlowerConversation({ exchanges }: FlowerConversationProps) {
         {
           id: `${exchange.id}-speaker`,
           flower: exchange.speaker,
-          lines: exchange.line,
-          durationMs: Math.round(exchange.durationMs / 2),
+          text: exchange.line,
+          durationMs: exchange.durationMs,
         },
         {
           id: `${exchange.id}-listener`,
           flower: exchange.listener,
-          lines: exchange.echo,
-          durationMs: Math.round(exchange.durationMs / 2),
+          text: exchange.echo,
+          durationMs: exchange.durationMs,
         },
       ]),
     [exchanges]
@@ -150,7 +149,7 @@ export function FlowerConversation({ exchanges }: FlowerConversationProps) {
     }, currentCue.durationMs);
 
     return () => window.clearTimeout(timer);
-  }, [currentCue.durationMs, cues.length, reducedMotion]);
+  }, [currentCue.durationMs, currentCue.id, cues.length, reducedMotion]);
 
   return (
     <div
@@ -158,21 +157,25 @@ export function FlowerConversation({ exchanges }: FlowerConversationProps) {
       data-reduced-motion={reducedMotion}
       data-testid="flower-conversation"
     >
-      <div className={styles.plant}>
-        <Image
-          src="/images/daisybush.png"
-          alt="A hand-drawn daisy bush with five flowers in conversation."
-          width={904}
-          height={610}
-          className={styles.image}
-          priority
+      <div
+        className={styles.captionLayer}
+        role="status"
+        aria-live={reducedMotion ? "off" : "polite"}
+      >
+        <Caption
+          position={flowerPositions[currentCue.flower].caption}
+          text={currentCue.text}
         />
       </div>
 
-      <div role="status" aria-live={reducedMotion ? "off" : "polite"}>
-        <Caption
-          position={flowerPositions[currentCue.flower].caption}
-          lines={currentCue.lines}
+      <div className={styles.plant}>
+        <Image
+          src="/images/flower-bunch.svg"
+          alt="A hand-drawn daisy bush with five flowers in conversation."
+          width={196}
+          height={70}
+          className={styles.image}
+          priority
         />
       </div>
     </div>

@@ -22,17 +22,34 @@ describe("FlowerConversation", () => {
 
   it("cycles the minimal caption between flowers over time", () => {
     render(<FlowerConversation exchanges={flowerExchanges} />);
+    const stepMs = flowerExchanges[0].durationMs + 50;
 
     expect(screen.getByTestId("flower-caption")).toHaveTextContent(
-      /I'm all ears,\s*start at page one\./
+      /I'm all ears\./
     );
 
     act(() => {
-      vi.advanceTimersByTime(Math.round(flowerExchanges[0].durationMs / 2) + 50);
+      vi.advanceTimersByTime(stepMs);
     });
 
     expect(screen.getByTestId("flower-caption")).toHaveTextContent(
-      /Can you hear every\s*chapter and pause\?/
+      /That plot twist hit hard\./
+    );
+
+    act(() => {
+      vi.advanceTimersByTime(stepMs);
+    });
+
+    expect(screen.getByTestId("flower-caption")).toHaveTextContent(
+      /I nearly lost my petals\./
+    );
+
+    act(() => {
+      vi.advanceTimersByTime(stepMs);
+    });
+
+    expect(screen.getByTestId("flower-caption")).toHaveTextContent(
+      /Ready for chapter two\?/
     );
   });
 
@@ -60,7 +77,7 @@ describe("FlowerConversation", () => {
     });
 
     expect(screen.getByTestId("flower-caption")).toHaveTextContent(
-      /I'm all ears,\s*start at page one\./
+      /I'm all ears\./
     );
   });
 });

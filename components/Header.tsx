@@ -21,9 +21,6 @@ export function Header({ navItems, primaryCta }: HeaderProps) {
     <header className={styles.header}>
       <div className={styles.bar}>
         <nav className={styles.nav} aria-label="Primary">
-          <Link className={styles.link} href={navItems[0].href}>
-            {navItems[0].label}
-          </Link>
           <Link href="/" aria-label="Audaisy home" className={styles.logoWrap}>
             <Image
               src="/images/daisy-logo.png"
@@ -33,13 +30,6 @@ export function Header({ navItems, primaryCta }: HeaderProps) {
               priority
               className={styles.logo}
             />
-          </Link>
-          <Link
-            className={styles.link}
-            href={navItems[1].href}
-            {...linkProps(navItems[1])}
-          >
-            {navItems[1].label}
           </Link>
         </nav>
         <Link

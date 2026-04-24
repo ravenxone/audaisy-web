@@ -1,39 +1,60 @@
 .section {
-  padding: 2rem clamp(1.25rem, 3vw, 2.75rem) 0;
+  flex: 1;
+  display: flex;
+  padding: 0 clamp(1.25rem, 3vw, 2.75rem) 0;
 }
 
 .inner {
+  position: relative;
+  flex: 1;
+  width: 100%;
   max-width: 1240px;
-  min-height: clamp(37rem, 74vh, 50rem);
   margin: 0 auto;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(21rem, 34rem);
-  align-items: start;
-  gap: clamp(2rem, 5vw, 5rem);
+  grid-template-columns: minmax(0, 1.18fr) minmax(20rem, 28rem);
+  align-items: end;
+  gap: clamp(1.5rem, 4vw, 3rem);
 }
 
 .copy {
-  padding-top: clamp(6rem, 15vh, 10rem);
-  max-width: 42rem;
+  padding-top: clamp(11rem, 20.4vh, 13.75rem);
+  max-width: 49rem;
+  align-self: start;
 }
 
 .title {
   margin: 0;
-  font-family: var(--font-display), cursive;
-  font-size: clamp(4rem, 8vw, 6.7rem);
-  line-height: 0.88;
-  letter-spacing: 0.02em;
+  font-size: clamp(3rem, 4vw, 4rem);
+  font-weight: 400;
+  line-height: 1.18;
+  letter-spacing: 0.005em;
 }
 
 .titleLine {
   display: block;
 }
 
+.titleSans {
+  font-family: var(--font-arimo), sans-serif;
+}
+
+.titleVoice {
+  font-family: var(--font-cedarville), cursive;
+}
+
+.subtext {
+  margin: 1rem 0 0;
+  max-width: 36rem;
+  font-family: var(--font-arimo), sans-serif;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
 .actions {
   display: flex;
   align-items: center;
   gap: 1rem;
-  margin-top: 2rem;
+  margin-top: 2.15rem;
   flex-wrap: wrap;
 }
 
@@ -42,17 +63,19 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 11rem;
-  min-height: 3.15rem;
-  padding: 0.75rem 1.4rem;
-  border-radius: 999px;
-  border: 1px solid rgba(17, 17, 17, 0.06);
-  font-size: 0.95rem;
+  width: 131px;
+  height: 32px;
+  padding: 0;
+  border-radius: 20px;
+  border: 0.5px solid #f5f5f5;
+  font-family: var(--font-arimo), sans-serif;
+  font-size: 0.625rem;
+  font-weight: 400;
+  line-height: 0.75rem;
   text-align: center;
-  box-shadow: 0 20px 35px -28px var(--button-shadow);
+  box-shadow: none;
   transition:
     transform 180ms ease,
-    box-shadow 180ms ease,
     background-color 180ms ease;
 }
 
@@ -61,7 +84,7 @@
 }
 
 .secondaryButton {
-  background: #dedede;
+  background: #dbdbdb;
 }
 
 .primaryButton:hover,
@@ -69,14 +92,6 @@
 .secondaryButton:hover,
 .secondaryButton:focus-visible {
   transform: translateY(-1px);
-  box-shadow: 0 24px 38px -24px var(--button-shadow);
-}
-
-.art {
-  align-self: end;
-  justify-self: end;
-  width: min(100%, 34rem);
-  margin-top: clamp(3rem, 10vh, 7rem);
 }
 
 @media (max-width: 980px) {
@@ -85,19 +100,14 @@
   }
 
   .copy {
-    padding-top: 4rem;
-  }
-
-  .art {
-    justify-self: center;
-    width: min(100%, 30rem);
-    margin-top: 0;
+    padding-top: clamp(8rem, 16vh, 10rem);
+    max-width: 40rem;
   }
 }
 
 @media (max-width: 640px) {
   .title {
-    font-size: clamp(3.1rem, 15vw, 4.7rem);
+    font-size: clamp(2.6rem, 10vw, 3.5rem);
   }
 
   .actions {
@@ -106,6 +116,6 @@
 
   .primaryButton,
   .secondaryButton {
-    width: 100%;
+    width: 131px;
   }
 }

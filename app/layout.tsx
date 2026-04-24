@@ -1,5 +1,9 @@
 import type { Metadata } from "next";
-import { Just_Me_Again_Down_Here, Special_Elite } from "next/font/google";
+import {
+  Arimo,
+  Cedarville_Cursive,
+  Just_Me_Again_Down_Here,
+} from "next/font/google";
 
 import "./globals.css";
 
@@ -9,10 +13,15 @@ const displayFont = Just_Me_Again_Down_Here({
   variable: "--font-display",
 });
 
-const bodyFont = Special_Elite({
+const arimo = Arimo({
+  subsets: ["latin"],
+  variable: "--font-arimo",
+});
+
+const cedarvilleCursive = Cedarville_Cursive({
   subsets: ["latin"],
   weight: "400",
-  variable: "--font-typewriter",
+  variable: "--font-cedarville",
 });
 
 export const metadata: Metadata = {
@@ -28,7 +37,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${displayFont.variable} ${bodyFont.variable}`}>
+      <body
+        className={`${displayFont.variable} ${arimo.variable} ${cedarvilleCursive.variable}`}
+        suppressHydrationWarning
+      >
         {children}
       </body>
     </html>

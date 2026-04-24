@@ -4,6 +4,13 @@
   --sun: #ffcc00;
   --mist: #f0ece1;
   --button-shadow: rgba(17, 17, 17, 0.12);
+  --font-typewriter:
+    "American Typewriter",
+    "American Typewriter Semibold",
+    "Iowan Old Style",
+    "Book Antiqua",
+    Georgia,
+    serif;
 }
 
 * {
