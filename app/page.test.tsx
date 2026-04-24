@@ -3,13 +3,13 @@ import { render, screen } from "@testing-library/react";
 import Page from "./page";
 
 describe("Landing page", () => {
-  it("renders the hero and keeps fold 2 as an anchor target", () => {
+  it("renders the simplified landing page", () => {
     render(<Page />);
 
     expect(
       screen.getByRole("heading", {
         level: 1,
-        name: /Audaisy gives every Writing a Voice/i,
+        name: /Audaisy gives every writing a Voice/i,
       })
     ).toBeInTheDocument();
     expect(
@@ -20,13 +20,19 @@ describe("Landing page", () => {
     expect(
       screen.getAllByRole("link", { name: /View Github/i })
     ).toHaveLength(2);
-    expect(screen.getByRole("link", { name: /Learn More/i })).toHaveAttribute(
-      "href",
-      "#story"
+    expect(screen.getByTitle(/Audaisy product video/i)).toHaveAttribute(
+      "src",
+      expect.stringContaining("youtube.com/embed/aFe_A8NRpy8")
     );
-    expect(document.getElementById("story")).toBeInTheDocument();
-    expect(screen.queryByRole("link", { name: /Our Story/i })).not.toBeInTheDocument();
-    expect(screen.queryByRole("link", { name: /^Github$/i })).not.toBeInTheDocument();
-    expect(screen.getByTestId("flower-conversation")).toBeInTheDocument();
+    expect(
+      screen.getByText(/Local \. Secure \. Free \. Open sourced/i)
+    ).toBeInTheDocument();
+    expect(
+      screen.queryByRole("link", { name: /Learn More/i })
+    ).not.toBeInTheDocument();
+    expect(document.getElementById("story")).not.toBeInTheDocument();
+    expect(
+      screen.queryByTestId("flower-conversation")
+    ).not.toBeInTheDocument();
   });
 });

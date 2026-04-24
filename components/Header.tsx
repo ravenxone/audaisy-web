@@ -6,7 +6,6 @@ import type { SiteLink } from "@/data/site";
 import styles from "./Header.module.css";
 
 type HeaderProps = {
-  navItems: readonly SiteLink[];
   primaryCta: SiteLink;
 };
 
@@ -16,22 +15,20 @@ function linkProps(link: SiteLink) {
     : undefined;
 }
 
-export function Header({ navItems, primaryCta }: HeaderProps) {
+export function Header({ primaryCta }: HeaderProps) {
   return (
     <header className={styles.header}>
       <div className={styles.bar}>
-        <nav className={styles.nav} aria-label="Primary">
-          <Link href="/" aria-label="Audaisy home" className={styles.logoWrap}>
-            <Image
-              src="/images/daisy-logo.png"
-              alt=""
-              width={72}
-              height={72}
-              priority
-              className={styles.logo}
-            />
-          </Link>
-        </nav>
+        <Link href="/" aria-label="Audaisy home" className={styles.logoWrap}>
+          <Image
+            src="/images/daisy-logo.png"
+            alt=""
+            width={72}
+            height={72}
+            priority
+            className={styles.logo}
+          />
+        </Link>
         <Link
           className={styles.cta}
           href={primaryCta.href}

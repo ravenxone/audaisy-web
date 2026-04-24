@@ -1,9 +1,0 @@
-.section {
-  position: relative;
-  z-index: 1;
-  left: 50%;
-  width: 100vw;
-  margin-left: -50vw;
-  min-height: clamp(24rem, 32vw, 32rem);
-  background: url("/images/fold-2-bg.svg") center / cover no-repeat;
-}

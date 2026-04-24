@@ -1,57 +1,22 @@
 .header {
-  position: absolute;
-  inset: 0 0 auto 0;
-  z-index: 3;
-  padding: 2rem clamp(1.25rem, 3vw, 2.75rem) 0;
+  padding: 1.5rem clamp(1.25rem, 3vw, 2.75rem) 0;
 }
 
 .bar {
   position: relative;
-  max-width: 1240px;
+  max-width: 1200px;
   margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 3.75rem;
-}
-
-.nav {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: clamp(1.5rem, 5vw, 3rem);
-  padding-inline: 10rem;
-}
-
-.link {
-  position: relative;
-  font-size: clamp(0.95rem, 1vw + 0.5rem, 1.2rem);
-  letter-spacing: 0.02em;
-}
-
-.link::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -0.35rem;
-  width: 100%;
-  height: 2px;
-  background: var(--ink);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 180ms ease;
-}
-
-.link:hover::after,
-.link:focus-visible::after {
-  transform: scaleX(1);
+  min-height: 3.5rem;
 }
 
 .logoWrap {
   display: grid;
   place-items: center;
-  width: clamp(2.75rem, 5vw, 3.6rem);
-  height: clamp(2.75rem, 5vw, 3.6rem);
+  width: clamp(2.85rem, 4vw, 3.4rem);
+  height: clamp(2.85rem, 4vw, 3.4rem);
 }
 
 .logo {
@@ -63,35 +28,43 @@
   position: absolute;
   right: 0;
   top: 50%;
-  transform: translateY(-50%);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 131px;
-  height: 32px;
-  padding: 0;
-  border-radius: 20px;
-  border: 0.5px solid #f5f5f5;
+  min-width: 9.75rem;
+  height: 2.6rem;
+  padding: 0 1.45rem;
+  border-radius: 999px;
+  border: 1px solid rgba(17, 17, 17, 0.04);
   background: var(--sun);
-  box-shadow: none;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    0 12px 28px -22px rgba(17, 17, 17, 0.5);
   font-family: var(--font-typewriter), monospace;
-  font-size: 0.625rem;
+  font-size: 0.96rem;
   font-weight: 400;
-  line-height: 0.75rem;
+  line-height: 1;
   text-align: center;
+  transform: translateY(-50%);
+  transition:
+    transform 180ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 180ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .cta:hover,
 .cta:focus-visible {
   transform: translateY(calc(-50% - 1px));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    0 16px 32px -24px rgba(17, 17, 17, 0.55);
+}
+
+.cta:active {
+  transform: translateY(-50%) scale(0.985);
 }
 
 @media (max-width: 860px) {
   .bar {
-    min-height: 3.75rem;
-  }
-
-  .nav {
-    padding-inline: 0;
+    min-height: 3.5rem;
   }
 }
