@@ -28,6 +28,11 @@ export const metadata: Metadata = {
   title: "Audaisy",
   description:
     "Audaisy turns writing into intimate, local-first audiobooks with a voice and an audience.",
+  icons: {
+    icon: "/images/daisy-logo.png",
+    shortcut: "/images/daisy-logo.png",
+    apple: "/images/daisy-logo.png",
+  },
 };
 
 export default function RootLayout({
